@@ -1,3 +1,3 @@
 # EDM
 ## Email Delivery Message
-### Clone telah sukses
+### Clone telah sucks
