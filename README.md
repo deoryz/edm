@@ -1,2 +1,2 @@
-* EDM
-** Email Delivery Message
+# EDM
+## Email Delivery Message
