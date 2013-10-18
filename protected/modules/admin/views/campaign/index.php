@@ -1,31 +1,34 @@
 <?php
 $this->breadcrumbs=array(
-	'Campaigns',
+	'Promosi',
 );
 
 $this->menu=array(
-	array('label'=>'Add Campaign', 'icon'=>'th-list','url'=>array('create')),
+	array('label'=>'Add Promosi', 'icon'=>'th-list','url'=>array('create')),
 );
 ?>
 
-<h1>Campaigns</h1>
+<h1>Promosi</h1>
 <?php $this->widget('bootstrap.widgets.TbButtonGroup',array('buttons'=>$this->menu,)); ?><br/><br/>
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'campaign-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
-		'id',
+		// 'id',
 		'nama',
-		'id_kontak',
 		'subject',
-		'html_message',
-		'text_message',
-		/*
 		'tgl_input',
-		'tgl_update',
+		array(
+			'name'=>'active',
+			'filter'=>array('0'=>'Deactive', '1'=>'Active'),
+			'value'=>'($data->active==1)?"Active":"Deactive"',
+		),
 		'status',
-		'active',
+		// 'html_message',
+		// 'text_message',
+		/*
+		'tgl_update',
 		*/
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',

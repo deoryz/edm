@@ -15,21 +15,12 @@ $this->menu=array(
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
-		'id',
+		// 'id',
 		'type',
 		'jenis',
 		'area',
 		'bedroom',
 		'shower',
-		/*
-		'carport',
-		'luas_tanah',
-		'luas_bangunan',
-		'harga',
-		'score',
-		'intro',
-		'deskripsi',
-		*/
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 			'template'=>'{update} {delete}'

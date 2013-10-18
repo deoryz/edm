@@ -6,7 +6,6 @@
  * The followings are the available columns in table 'campaign':
  * @property integer $id
  * @property string $nama
- * @property integer $id_kontak
  * @property string $subject
  * @property string $html_message
  * @property string $text_message
@@ -43,13 +42,13 @@ class Campaign extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nama, id_kontak, subject, html_message, text_message, tgl_input, tgl_update, status, active', 'required'),
-			array('id_kontak, active', 'numerical', 'integerOnly'=>true),
+			array('nama, subject, html_message, text_message', 'required'),
+			array('active', 'numerical', 'integerOnly'=>true),
 			array('subject', 'length', 'max'=>225),
 			array('status', 'length', 'max'=>8),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, nama, id_kontak, subject, html_message, text_message, tgl_input, tgl_update, status, active', 'safe', 'on'=>'search'),
+			array('id, nama, subject, html_message, text_message, tgl_input, tgl_update, status, active', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,13 +70,12 @@ class Campaign extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'nama' => 'Nama',
-			'id_kontak' => 'Id Kontak',
+			'nama' => 'Nama Promosi',
 			'subject' => 'Subject',
 			'html_message' => 'Html Message',
 			'text_message' => 'Text Message',
-			'tgl_input' => 'Tgl Input',
-			'tgl_update' => 'Tgl Update',
+			'tgl_input' => 'Tanggal Input',
+			'tgl_update' => 'Tanggal Update',
 			'status' => 'Status',
 			'active' => 'Active',
 		);
@@ -96,7 +94,6 @@ class Campaign extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('nama',$this->nama,true);
-		$criteria->compare('id_kontak',$this->id_kontak);
 		$criteria->compare('subject',$this->subject,true);
 		$criteria->compare('html_message',$this->html_message,true);
 		$criteria->compare('text_message',$this->text_message,true);
