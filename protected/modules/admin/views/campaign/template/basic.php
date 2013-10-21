@@ -4,8 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Edm Small</title>
  -->
-<?php $baseUrl= Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; 
-$url = Yii::app()->request->hostInfo; ?>
+<?php $baseUrl=Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; $url = Yii::app()->request->hostInfo; ?>
 <style type="text/css">
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,300,700);
 
@@ -143,7 +142,7 @@ table.info-footer a {
 </head>
 
 <body bgcolor="#FFFFFF" topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0">
-    <table border="0" class="full" width="595" cellspacing="0" cellpadding="0" style="text-align: center;">
+    <table border="0" class="full" width="595" cellspacing="0" cellpadding="0" style="text-align: center;" align="center">
         <tr>
             <td>
                 <table background="<?php echo $baseUrl ?>/asset/images/back-top-content.jpg" class="back-full-content-primary" width="595" height="273" border="0" cellspacing="0" cellpadding="0">
@@ -202,7 +201,7 @@ table.info-footer a {
                                 <font color="#000" style="font-weight:300; font-size: 15px;" face="'Roboto', Tahoma, arial">
                                     <span style="font-size: 15px">
                                         Christian sibuk
-                                        <strong>mencari &quot;Penjual&quot;</strong>karena di jaringan / network businessnya yang saat ini telah mencapai 2500 VIP contacts, 100 di antaranya adalah
+                                        <strong>mencari &quot;Penjual&quot;</strong> karena di jaringan / network businessnya yang saat ini telah mencapai 2500 VIP contacts, 100 di antaranya adalah
                                         <strong>&quot;Active Buyer&quot;</strong>yang selalu siap membeli property dengan nilai strategis tinggi, sementara contacts yang lain adalah dari kalangan mampu yang juga berpotensi.
                                     </span>
                                 </font>

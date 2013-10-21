@@ -1,5 +1,4 @@
-<?php $baseUrl= Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; 
-$url = Yii::app()->request->hostInfo; ?>
+<?php $baseUrl=Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; $url = Yii::app()->request->hostInfo; ?>
 <style type="text/css">
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,300,700);
 
@@ -85,6 +84,7 @@ INLINE: No.
     font-wegith: 400;
     font-size: 12px;
     color: #FFF;
+    margin: 0px;
 }
 table {
     border-collapse:collapse;
