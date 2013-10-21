@@ -23,16 +23,29 @@
 
 	<?php echo $form->textFieldRow($model,'subject',array('class'=>'span5','maxlength'=>225)); ?>
 
-	<?php echo $form->textAreaRow($model,'html_message',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
-
-	<?php echo $form->textAreaRow($model,'text_message',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
-
+	<div class="control-group">
+		<?php echo $form->labelEx($model,'contact',array('class'=>'control-label')) ?>
+		<div class="controls">
+		<?php $this->widget('application.extensions.jmultiselect2side.Jmultiselect2side',array(
+            'model'=>$model,
+            'attribute'=>'contact', //selected items
+            // 'labelsx'=>'Disponible',
+            // 'labeldx'=>'Seleccionado',
+            'moveOptions'=>false,
+            'autoSort'=>'true',
+            // 'search' =>'Filtro:',
+          	'list'=>CHtml::listData(GroupKontak::model()->findAll(),'id','nama'),
+	 
+	    )); ?>
+	    <div class="clear"></div>
+		</div>
+	</div>
 
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
 			'buttonType'=>'submit',
 			'type'=>'primary',
-			'label'=>$model->isNewRecord ? 'Add' : 'Save',
+			'label'=>'Lanjut ke step 2',
 		)); ?>
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
 			// 'buttonType'=>'submit',

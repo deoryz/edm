@@ -1,26 +1,19 @@
 <?php
 
 /**
- * This is the model class for table "campaign".
+ * This is the model class for table "campaign_contact".
  *
- * The followings are the available columns in table 'campaign':
+ * The followings are the available columns in table 'campaign_contact':
  * @property integer $id
- * @property string $nama
- * @property string $subject
- * @property string $html_message
- * @property string $text_message
- * @property string $tgl_input
- * @property string $tgl_update
- * @property string $status
- * @property integer $active
+ * @property integer $campaign_id
+ * @property integer $group_kontak_id
  */
-class Campaign extends CActiveRecord
+class CampaignContact extends CActiveRecord
 {
-	public $contact;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return Campaign the static model class
+	 * @return CampaignContact the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -32,7 +25,7 @@ class Campaign extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'campaign';
+		return 'campaign_contact';
 	}
 
 	/**
@@ -43,13 +36,11 @@ class Campaign extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nama, subject, contact', 'required', 'on'=>'input-step1'),
-			array('active', 'numerical', 'integerOnly'=>true),
-			array('subject', 'length', 'max'=>225),
-			array('status', 'length', 'max'=>8),
+			array('campaign_id, group_kontak_id', 'required'),
+			array('campaign_id, group_kontak_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, nama, subject, html_message, text_message, tgl_input, tgl_update, status, active', 'safe', 'on'=>'search'),
+			array('id, campaign_id, group_kontak_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,15 +62,8 @@ class Campaign extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'nama' => 'Nama Promosi',
-			'subject' => 'Subject',
-			'html_message' => 'Html Message',
-			'text_message' => 'Text Message',
-			'tgl_input' => 'Tanggal Input',
-			'tgl_update' => 'Tanggal Update',
-			'status' => 'Status',
-			'active' => 'Active',
-			'contact' => 'Kirim ke',
+			'campaign_id' => 'Campaign',
+			'group_kontak_id' => 'Group Kontak',
 		);
 	}
 
@@ -95,14 +79,8 @@ class Campaign extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('nama',$this->nama,true);
-		$criteria->compare('subject',$this->subject,true);
-		$criteria->compare('html_message',$this->html_message,true);
-		$criteria->compare('text_message',$this->text_message,true);
-		$criteria->compare('tgl_input',$this->tgl_input,true);
-		$criteria->compare('tgl_update',$this->tgl_update,true);
-		$criteria->compare('status',$this->status,true);
-		$criteria->compare('active',$this->active);
+		$criteria->compare('campaign_id',$this->campaign_id);
+		$criteria->compare('group_kontak_id',$this->group_kontak_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

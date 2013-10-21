@@ -188,7 +188,7 @@ table.info-footer a {
           <td>&nbsp;</td>
         </tr> -->
                     <tr>
-                        <td>
+                        <td class="iframe-test">
                             <p style="margin: auto 3em 1em 2em; text-align: justify; line-height:1.5;">
                                 <font color="#000" style="font-weight:300; font-size: 15px;" face="'Roboto', Tahoma, arial">
                                     <span style="font-size: 15px">

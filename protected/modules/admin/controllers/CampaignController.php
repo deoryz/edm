@@ -39,23 +39,13 @@ class CampaignController extends Controller
 	}
 
 	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
-	}
-
-	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
 	public function actionCreate()
 	{
 		$model=new Campaign;
+		$model->scenario = 'input-step1';
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -68,8 +58,45 @@ class CampaignController extends Controller
 				try
 				{
 					$model->save();
+
+					foreach ($_POST['Campaign']['contact'] as $key => $value) {
+						$model2=new CampaignContact;
+						$model2->campaign_id = $model->id;
+						$model2->group_kontak_id = $value;
+						$model2->save();
+					}
+
 					Log::createLog("CampaignController Create $model->id");
-					Yii::app()->user->setFlash('success','Data has been inserted');
+					Yii::app()->user->setFlash('success','Data disimpan');
+				    $transaction->commit();
+					$this->redirect(array('createstep2','id'=>$model->id));
+				}
+				catch(Exception $ce)
+				{
+				    $transaction->rollback();
+				}
+			}
+		}
+
+		$this->render('create',array(
+			'model'=>$model,
+		));
+	}
+
+	public function actionCreatestep2($id)
+	{
+		$model=$this->loadModel($id);
+
+		if(isset($_POST['Campaign']))
+		{
+			$model->attributes=$_POST['Campaign'];
+			if($model->validate()){
+				$transaction=$model->dbConnection->beginTransaction();
+				try
+				{
+					$model->save();
+					Log::createLog("CampaignController Update $model->id");
+					Yii::app()->user->setFlash('success','Data Edited');
 				    $transaction->commit();
 					$this->redirect(array('update','id'=>$model->id));
 				}
@@ -80,7 +107,7 @@ class CampaignController extends Controller
 			}
 		}
 
-		$this->render('create',array(
+		$this->render('createstep2',array(
 			'model'=>$model,
 		));
 	}
@@ -105,10 +132,19 @@ class CampaignController extends Controller
 				try
 				{
 					$model->save();
+
+					CampaignContact::model()->deleteAll('group_kontak_id = :group_kontak_id',array(':group_kontak_id'=>$model->id));
+					foreach ($_POST['Campaign']['contact'] as $key => $value) {
+						$model2=new CampaignContact;
+						$model2->campaign_id = $model->id;
+						$model2->group_kontak_id = $value;
+						$model2->save();
+					}
+
 					Log::createLog("CampaignController Update $model->id");
-					Yii::app()->user->setFlash('success','Data Edited');
+					Yii::app()->user->setFlash('success','Data disimpan');
 				    $transaction->commit();
-					$this->redirect(array('update','id'=>$model->id));
+					$this->redirect(array('createstep2','id'=>$model->id));
 				}
 				catch(Exception $ce)
 				{
@@ -116,6 +152,13 @@ class CampaignController extends Controller
 				}
 			}
 		}
+
+		$dataContact = CampaignContact::model()->findAll('group_kontak_id = :group_kontak_id',array(':group_kontak_id'=>$model->id));
+		$arrayContact = array();
+		foreach ($dataContact as $key => $value) {
+			$arrayContact[] = $value->campaign_id;
+		}
+		$model->contact = $arrayContact;
 
 		$this->render('update',array(
 			'model'=>$model,
@@ -159,18 +202,9 @@ class CampaignController extends Controller
 		));
 	}
 
-	/**
-	 * Manages all models.
-	 */
-	public function actionAdmin()
+	public function actionTemplate($name)
 	{
-		$model=new Campaign('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Campaign']))
-			$model->attributes=$_GET['Campaign'];
-
-		$this->render('admin',array(
-			'model'=>$model,
+		$this->renderPartial('template/'.$name,array(
 		));
 	}
 
