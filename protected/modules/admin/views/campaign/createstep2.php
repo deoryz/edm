@@ -37,6 +37,13 @@ $this->menu=array(
 
 	<?php echo $form->uneditableRow($model,'subject',array('class'=>'span5','maxlength'=>225)); ?>
 
+	<div class="" style="display: none;">
+		<?php echo $form->textField($model,'template',array('class'=>'span5','maxlength'=>225)); ?>
+
+		<?php echo $form->textArea($model,'html_message',array('class'=>'span5', 'rows'=>10)); ?>
+
+		<?php echo $form->textArea($model,'text_message',array('class'=>'span5', 'rows'=>10)); ?>
+	</div>
 	<div class="control-group">
 		<label for="Campaign_subject" class="control-label">Pilih template</label>
 		<div class="controls">
@@ -61,8 +68,12 @@ $this->menu=array(
 		    <div class="clear"></div>
 		</div>
 	</div>
-	<iframe src="" id="iframe-template" class="iframe-template" frameborder="0" style="display: none;" width="100%" height="600"></iframe>
-	
+	<?php if ($model->template ==''): ?>
+		<iframe src="" id="iframe-template" class="iframe-template" frameborder="0" style="display: none;" width="100%" height="600"></iframe>
+	<?php else: ?>
+		<iframe src="<?php echo CHtml::normalizeUrl(array('template', 'name'=>$model->template)) ?>" id="iframe-template" class="iframe-template" frameborder="0" style="" width="100%" height="600"></iframe>
+	<?php endif ?>
+
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
 			'buttonType'=>'submit',
@@ -78,6 +89,11 @@ $this->menu=array(
 	</div>
 
 <?php $this->endWidget(); ?>
+<?php $this->widget('application.extensions.fancyapps.EFancyApps', array(
+    'target'=>'',
+    'config'=>array(),
+    )
+); ?>
 <script type="text/javascript">
 	$(function(){
 
@@ -87,15 +103,46 @@ $this->menu=array(
 			return false;
 		})
 		$('.iframe-template').load(function(){
-
 	        var iframe = $('.iframe-template').contents();
 
 	        // template basic
-	        iframe.find(".iframe-test").bind('click', function(){
-	               alert("test");
+	        iframe.find(".edit-title-email").bind('click', function(){
+				$.fancybox({
+					'content': $('.content-edit-email').html(),
+				});
 	        });
 
+	        <?php if ($model->template =='basic'): ?>
+	        iframe.find(".edit-title-email").html($($('#Campaign_html_message').val()).contents().find(".edit-title-email").html());
+	        iframe.find(".div-edit-content-email").html($($('#Campaign_html_message').val()).contents().find(".div-edit-content-email").html());
+	        <?php endif ?>
 		});
+		$('.fancybox-outer #edit-title-email-form').live('submit', function() {
+			var iframe = $('.iframe-template').contents();
+			iframe.find(".edit-title-email").html($('.fancybox-outer input#edit-title-email-text').val());
+			$.fancybox.close();
+			return false;
+		})
+		$('#campaign-form').live('submit', function() {
+			var iframe = $('.iframe-template').contents();
+			iframe.find('.edit-content-email-btn').remove();
+			$('#Campaign_html_message').val(iframe.find('.body-email').html());
+
+			iframe.find('.body-email-text-title').html(iframe.find('.edit-title-email').html())
+			iframe.find('.body-email-text-content').html(iframe.find('.div-edit-content-email').html())
+			// var StrippedString = OriginalString.replace(/(<([^>]+)>)/ig,"");
+			$('#Campaign_text_message').val(iframe.find('.body-email-text').html().replace(/(<([^>]+)>)/ig,""));
+			$('#Campaign_template').val(iframe.find('.template-name').html());
+			$('#campaign-form').submit();
+			return false;
+		})
 
 	})
 </script>
+<div class="content-edit-email" style="display: none;">
+	<form id="edit-title-email-form">
+	<h4>Edit Header</h4>
+	<input type="text" name="edit-title-email-text" id="edit-title-email-text" class="span6"><br>
+	<input type="submit" class="edit-title-email-btn btn btn-primary" value="Edit Header Text">
+	</form>
+</div>

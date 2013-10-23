@@ -66,7 +66,7 @@ class CampaignController extends Controller
 						$model2->save();
 					}
 
-					Log::createLog("CampaignController Create $model->id");
+					Log::createLog("Campaign Controller Create $model->id");
 					Yii::app()->user->setFlash('success','Data disimpan');
 				    $transaction->commit();
 					$this->redirect(array('createstep2','id'=>$model->id));
@@ -95,10 +95,10 @@ class CampaignController extends Controller
 				try
 				{
 					$model->save();
-					Log::createLog("CampaignController Update $model->id");
+					Log::createLog("Campaign Controller Update $model->id");
 					Yii::app()->user->setFlash('success','Data Edited');
 				    $transaction->commit();
-					$this->redirect(array('update','id'=>$model->id));
+					$this->redirect(array('createstep3','id'=>$model->id));
 				}
 				catch(Exception $ce)
 				{
@@ -108,6 +108,92 @@ class CampaignController extends Controller
 		}
 
 		$this->render('createstep2',array(
+			'model'=>$model,
+		));
+	}
+
+	public function actionCreatestep3($id)
+	{
+		$model=$this->loadModel($id);
+
+		if(isset($_POST['Campaign']))
+		{
+			$model->attributes=$_POST['Campaign'];
+			if($model->validate()){
+				$transaction=$model->dbConnection->beginTransaction();
+				try
+				{
+					$model->save();
+					Log::createLog("Campaign Controller Update $model->id");
+					Yii::app()->user->setFlash('success','Data Edited');
+				    $transaction->commit();
+					$this->redirect(array('createstep4','id'=>$model->id));
+				}
+				catch(Exception $ce)
+				{
+				    $transaction->rollback();
+				}
+			}
+		}
+
+		$this->render('createstep3',array(
+			'model'=>$model,
+		));
+	}
+
+	public function actionCreatestep4($id)
+	{
+		$model=$this->loadModel($id);
+
+		$dataContact = CampaignContact::model()->findAll('group_kontak_id = :group_kontak_id',array(':group_kontak_id'=>$model->id));
+
+		if(isset($_POST['Campaign']))
+		{
+			$transaction=$model->dbConnection->beginTransaction();
+			try
+			{
+				foreach ($dataContact as $key => $value) {
+					$kontak = Kontak::model()->findAll('group_id = :group_id', array(':group_id'=>$value->group_kontak_id ));
+					foreach ($kontak as $k => $v) {
+						$modelOutbox = new Outbox;
+						$modelOutbox->to = $v->email;
+						$modelOutbox->from = 'deo@markdesign.net';
+						$modelOutbox->subject = $model->subject;
+						$modelOutbox->html_message = Yii::app()->viewRenderer->renderString()->render($model->html_message, array(
+							'nama'=>$v->nama,
+							'email'=>$v->email,
+						));
+						$modelOutbox->text_message = Yii::app()->viewRenderer->renderString()->render($model->text_message, array(
+							'nama'=>$v->nama,
+							'email'=>$v->email,
+						));
+						$modelOutbox->tgl_input = date('Y-m-d H:i:s');
+						$modelOutbox->status = 0;
+						$modelOutbox->save();
+					}
+				}
+				$model->status = 'terkirim';
+				$model->save();
+				Log::createLog("Campaign Send Update $model->id");
+				Yii::app()->user->setFlash('success','Data Edited');
+			    $transaction->commit();
+				$this->redirect(array('index'));
+			}
+			catch(Exception $ce)
+			{
+				echo $ce;
+				exit;
+			    $transaction->rollback();
+			}
+		}
+
+		$arrayContact = array();
+		foreach ($dataContact as $key => $value) {
+			$arrayContact[] = GroupKontak::model()->findByPk($value->campaign_id)->nama;
+		}
+		$model->contact = implode(', ', $arrayContact);
+
+		$this->render('createstep4',array(
 			'model'=>$model,
 		));
 	}
@@ -204,7 +290,8 @@ class CampaignController extends Controller
 
 	public function actionTemplate($name)
 	{
-		$this->renderPartial('template/'.$name,array(
+		$this->layout='//layouts/_blank';
+		$this->render('template/'.$name,array(
 		));
 	}
 
@@ -232,5 +319,10 @@ class CampaignController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+	public function actionTest()
+	{
+		// echo $this->viewRender('index');
+		echo Yii::app()->viewRenderer->renderString()->render('asdasda {{ nama }}', array('nama'=>'deory'));
 	}
 }

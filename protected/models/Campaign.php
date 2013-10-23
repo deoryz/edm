@@ -46,7 +46,9 @@ class Campaign extends CActiveRecord
 			array('nama, subject, contact', 'required', 'on'=>'input-step1'),
 			array('active', 'numerical', 'integerOnly'=>true),
 			array('subject', 'length', 'max'=>225),
+			array('template', 'length', 'max'=>100),
 			array('status', 'length', 'max'=>8),
+			array('html_message, text_message, template', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, nama, subject, html_message, text_message, tgl_input, tgl_update, status, active', 'safe', 'on'=>'search'),

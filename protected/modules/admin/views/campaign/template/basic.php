@@ -1,10 +1,75 @@
-<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php $baseUrl=Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; $url = Yii::app()->request->hostInfo; ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Edm Small</title>
- -->
-<?php $baseUrl=Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; $url = Yii::app()->request->hostInfo; ?>
+<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
+<?php Yii::app()->bootstrap->registerCoreCss(); ?>
+<?php Yii::app()->bootstrap->registerCoreScripts(); ?>
+<?php Yii::import('ext.imperavi-redactor-widget.ImperaviRedactorWidget'); ?>
+<?php
+    $this->widget('ImperaviRedactorWidget', array(
+        // The textarea selector
+        'selector' => '.redactor',
+        // Some options, see http://imperavi.com/redactor/docs/
+        'options' => array(),
+    ));
+?>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.edit-content-email-btn-save').hide();
+
+        $('.edit-content-email-btn-edit').live('click', function() {
+            $('.div-edit-content-email').redactor({
+                focus: true
+            });
+            $('.edit-content-email-btn-edit').hide();
+            $('.edit-content-email-btn-save').show();
+            return false;
+        })
+        $('.edit-content-email-btn-save').live('click', function() {
+            $content = $('.div-edit-content-email').redactor('get');
+            $('.div-edit-content-email').redactor('destroy');
+            $('.div-edit-content-email').html($content);
+            $('.edit-content-email-btn-edit').show();
+            $('.edit-content-email-btn-save').hide();
+            return false;
+        })
+
+    })
+</script>
+</head>
+<body bgcolor="#FFFFFF" topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0">
+<div class="template-name" style="display: none;">basic</div>
+<div class="body-email-text" style="display: none;">
+ForumProperty.Net
+By Christian Wahyudi, Era Tjandra Group
+
+<div class="body-email-text-title"></div>
+
+--------------------------------------------------------------------
+
+<div class="body-email-text-content"></div>
+
+--------------------------------------------------------------------
+
+Hubungi Christian di:
+HP: 081 2352 7916, 031 7099 7273
+PIN: 2937C1CF
+Email: christian@forumproperty.net
+Links: http://www.facebook.com/forumproperty
+
+--------------------------------------------------------------------
+
+Jika Anda merasa terganggu dengan email Christian, silahkan klik di
+sini. 
+
+--------------------------------------------------------------------
+
+Powered by Mark Design.
+</div>
+<div class="body-email">
 <style type="text/css">
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,300,700);
 
@@ -88,9 +153,9 @@ INLINE: No.
     height: auto;
     margin: 0 auto;
     font-family:'Roboto', Arial, Helvetica, sans-serif;
-    font-wegith: 400;
-    font-size: 12px;
-    color: #FFF;
+    font-weight: 400;
+    /*font-size: 12px;*/
+    color: #000;
 }
 table {
     border-collapse:collapse;
@@ -139,10 +204,7 @@ table.info-footer a {
     text-decoration: none;
 }
 </style>
-</head>
-
-<body bgcolor="#FFFFFF" topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0">
-    <table border="0" class="full" width="595" cellspacing="0" cellpadding="0" style="text-align: center;" align="center">
+    <table border="0" class="full" width="595" cellspacing="0" cellpadding="0" align="center">
         <tr>
             <td>
                 <table background="<?php echo $baseUrl ?>/asset/images/back-top-content.jpg" class="back-full-content-primary" width="595" height="273" border="0" cellspacing="0" cellpadding="0">
@@ -163,10 +225,9 @@ table.info-footer a {
 
                                         <p style="margin-left: 28px; line-height: 1.5;">
                                             <font color="#FFFFFF" style="font-weight:300;" face="'Roboto', Tahoma, arial">
-                                                <span style="font-size: 24px">Jika orang lain sibuk mencari "pembeli" property, Christian justru sibuk mencari "penjual" property... Ingin tau kenapa?
-                                                    <br />
-                                                    <br />
-                                                </span>
+                                                <span style="font-size: 24px" class="edit-title-email">Jika orang lain sibuk mencari "pembeli" property, Christian justru sibuk mencari "penjual" property... Ingin tau kenapa? (Click To Edit)</span>
+                                                <br />
+                                                <br />
                                             </font>
                                         </p>
                                     </td>
@@ -188,32 +249,45 @@ table.info-footer a {
           <td>&nbsp;</td>
         </tr> -->
                     <tr>
-                        <td class="iframe-test">
-                            <p style="margin: auto 3em 1em 2em; text-align: justify; line-height:1.5;">
-                                <font color="#000" style="font-weight:300; font-size: 15px;" face="'Roboto', Tahoma, arial">
-                                    <span style="font-size: 15px">
-                                        Christian Wahyudi telah berkecimpung di dunia property brokerage sejak tahun 2002 bersama ERA Tjandra East. Dengan berjalannya waktu, berbagai usaha lain telah lahir di bawah entrepreneurship Christian, dan berkembang dengan sangat baik serta terlebih lagi adalah <b style="text-decoration: underline;">membuahkan jaringan / network dan sahabat yang sangat luas serta solid.</b>
-                                    </span>
-                                </font>
+                        <td>
+                            <p style="margin: auto 3em 1em 2em;" class="edit-content-email-btn">
+                                <a href="#" class="edit-content-email-btn-edit btn btn-primary">Edit</a>
+                                <a href="#" class="edit-content-email-btn-save btn btn-primary">Save</a>
                             </p>
+                            <table border="0" cellspacing="0" cellpadding="0" style="margin: auto 3em 1em 2em;">
+                                <tr>
+                                    <td class="edit-content-email">
+                                        <div class="div-edit-content-email"><p><b>(Click To Edit)</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit adipisci temporibus commodi magnam omnis maxime sint vel suscipit tenetur numquam?</p></div>
+                                        <?php /*
+                                        <p style="text-align: justify; line-height:1.5;">
+                                            <font color="#000" style="font-weight:300; font-size: 15px;" face="'Roboto', Tahoma, arial">
+                                                <span style="font-size: 15px">
+                                                    Christian Wahyudi telah berkecimpung di dunia property brokerage sejak tahun 2002 bersama ERA Tjandra East. Dengan berjalannya waktu, berbagai usaha lain telah lahir di bawah entrepreneurship Christian, dan berkembang dengan sangat baik serta terlebih lagi adalah <b style="text-decoration: underline;">membuahkan jaringan / network dan sahabat yang sangat luas serta solid.</b>
+                                                </span>
+                                            </font>
+                                        </p>
 
-                            <p style="margin: auto 3em 1em 2em; text-align: justify; line-height:1.5;">
-                                <font color="#000" style="font-weight:300; font-size: 15px;" face="'Roboto', Tahoma, arial">
-                                    <span style="font-size: 15px">
-                                        Christian sibuk
-                                        <strong>mencari &quot;Penjual&quot;</strong> karena di jaringan / network businessnya yang saat ini telah mencapai 2500 VIP contacts, 100 di antaranya adalah
-                                        <strong>&quot;Active Buyer&quot;</strong>yang selalu siap membeli property dengan nilai strategis tinggi, sementara contacts yang lain adalah dari kalangan mampu yang juga berpotensi.
-                                    </span>
-                                </font>
-                            </p>
+                                        <p style="text-align: justify; line-height:1.5;">
+                                            <font color="#000" style="font-weight:300; font-size: 15px;" face="'Roboto', Tahoma, arial">
+                                                <span style="font-size: 15px">
+                                                    Christian sibuk
+                                                    <strong>mencari &quot;Penjual&quot;</strong> karena di jaringan / network businessnya yang saat ini telah mencapai 2500 VIP contacts, 100 di antaranya adalah
+                                                    <strong>&quot;Active Buyer&quot;</strong>yang selalu siap membeli property dengan nilai strategis tinggi, sementara contacts yang lain adalah dari kalangan mampu yang juga berpotensi.
+                                                </span>
+                                            </font>
+                                        </p>
 
-                            <p style="margin: auto 3em 1em 2em; text-align: justify; line-height:1.5;">
-                                <font color="#000" style="font-weight:300; font-size: 15px;" face="'Roboto', Tahoma, arial">
-                                    <span style="font-size: 15px">
-                                        Pada kesempatan ini Christian ingin mengajak para rekan dan sahabat yang berminat untuk me-listing property atau mencari property, untuk dapat menghubungi serta memanfaatkan jaringan Christian.
-                                    </span>
-                                </font>
-                            </p>
+                                        <p style="text-align: justify; line-height:1.5;">
+                                            <font color="#000" style="font-weight:300; font-size: 15px;" face="'Roboto', Tahoma, arial">
+                                                <span style="font-size: 15px">
+                                                    Pada kesempatan ini Christian ingin mengajak para rekan dan sahabat yang berminat untuk me-listing property atau mencari property, untuk dapat menghubungi serta memanfaatkan jaringan Christian.
+                                                </span>
+                                            </font>
+                                        </p>
+                                        */ ?>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
 
@@ -308,6 +382,7 @@ margin: 0px 0px 0px 24px;" height="33" width="545" border="0" align="center" cel
             </td>
         </tr>
     </table>
+</div>
 </body>
 
-<!-- </html> -->
+</html>
