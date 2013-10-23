@@ -157,6 +157,34 @@ return array(
 			'class' => 'auth.components.AuthWebUser',
 			'loginUrl'=>array('admin/home/index'),
 		),
+		'viewRenderer' => array(
+			'class' => 'application.vendor.twig.yiitwig.ETwigViewRenderer',
+			'twigPathAlias' => 'application.vendor.twig.twig.lib.Twig',
+
+			// All parameters below are optional, change them to your needs
+			'fileExtension' => '.twig',
+			'options' => array(
+				'autoescape' => true,
+			),
+			'extensions' => array(
+				// 'My_Twig_Extension',
+			),
+			'globals' => array(
+				'html' => 'CHtml'
+			),
+			'functions' => array(
+				'rot13' => 'str_rot13',
+			),
+			'filters' => array(
+				'jencode' => 'CJSON::encode',
+			),
+			// Change template syntax to Smarty-like (not recommended)
+			'lexerOptions' => array(
+			'tag_comment'  => array('{*', '*}'),
+			'tag_block'    => array('{', '}'),
+			'tag_variable' => array('{$', '}')
+			),
+		),
 	),
 
 	// application-level parameters that can be accessed
