@@ -30,7 +30,7 @@ class Controller extends CController
 	// simpan language ID
 	public $languageID;
 
-	public function beforeAction()
+	protected function beforeAction($action)
 	{
 		// if ($_GET['lang']) {
 		// 	Yii::app()->language = $_GET['lang'];
@@ -42,6 +42,6 @@ class Controller extends CController
 		// $this->pageTitle = $this->setting['title'];
 		// $this->metaDesc = $this->setting['description'];
 		// $this->metaKey = $this->setting['keywords'];
-		return true;
+		return parent::beforeAction($action);
 	}
 }
