@@ -219,7 +219,7 @@ class CampaignController extends Controller
 				{
 					$model->save();
 
-					CampaignContact::model()->deleteAll('group_kontak_id = :group_kontak_id',array(':group_kontak_id'=>$model->id));
+					CampaignContact::model()->deleteAll('campaign_id = :campaign_id',array(':campaign_id'=>$model->id));
 					foreach ($_POST['Campaign']['contact'] as $key => $value) {
 						$model2=new CampaignContact;
 						$model2->campaign_id = $model->id;
@@ -239,7 +239,7 @@ class CampaignController extends Controller
 			}
 		}
 
-		$dataContact = CampaignContact::model()->findAll('group_kontak_id = :group_kontak_id',array(':group_kontak_id'=>$model->id));
+		$dataContact = CampaignContact::model()->findAll('campaign_id = :campaign_id',array(':campaign_id'=>$model->id));
 		$arrayContact = array();
 		foreach ($dataContact as $key => $value) {
 			$arrayContact[] = $value->campaign_id;
