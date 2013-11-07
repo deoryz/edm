@@ -163,23 +163,17 @@ RedactorPlugins.advanced = {
 		if($(this).val() == 'Lainnya'){
 			$('.view-area-lain').show('750');
 		}else{
-			// $('.view-area-lain').hide();
+			$('.view-area-lain').slideUp();
 			return false;
 		}
 		return false;
 	});
 	
-	var da_area = $('.gd_t_lainnya').val();
+	var da_area = $('#Property_area_lain').val();
 	
-	if( da_area != 'Surabaya Barat'
-	 || da_area != 'Surabaya Timur'
-	 || da_area != 'Surabaya Utara'
-	 || da_area != 'Surabaya Selatan'
-	 || da_area != 'Surabaya Pusat'
-	 || da_area != 'Lainnya'
-	){
-		$('.view-area-lain').show('750');
+	if( da_area == '' ){
+		$('.view-area-lain').slideUp();
 	}else{
-		$('.view-area-lain').hide();
+		$('.view-area-lain').show('750');
 	}
 </script>
