@@ -43,21 +43,27 @@
 	<div class="view-area-lain" style="display: none;">
 		<?php echo $form->textFieldRow($model,'area_lain',array('class'=>'span3')); ?>
 	</div>
+	<?php echo $form->textFieldRow($model,'name',array('class'=>'span4')); ?>
+
+	<?php echo $form->textFieldRow($model,'url',array('class'=>'span4')); ?>
+
 	<?php echo $form->textFieldRow($model,'bedroom',array('class'=>'span1')); ?>
 
 	<?php echo $form->textFieldRow($model,'shower',array('class'=>'span1')); ?>
 
 	<?php echo $form->textFieldRow($model,'carport',array('class'=>'span1')); ?>
 
-	<?php echo $form->textFieldRow($model,'luas_tanah',array('class'=>'span2', 'append'=>'m2')); ?>
+	<?php echo $form->textFieldRow($model,'luas_tanah',array('class'=>'span1', 'append'=>'m2')); ?>
 
-	<?php echo $form->textFieldRow($model,'luas_bangunan',array('class'=>'span2', 'append'=>'m2')); ?>
+	<?php echo $form->textFieldRow($model,'luas_bangunan',array('class'=>'span1', 'append'=>'m2')); ?>
 
-	<?php echo $form->textFieldRow($model,'harga',array('class'=>'span3', 'prepend'=>'Rp.')); ?>
+	<?php echo $form->textFieldRow($model,'harga',array('class'=>'span2', 'prepend'=>'Rp.')); ?>
 
-	<?php echo $form->textFieldRow($model,'bind',array('class'=>'span3')); ?>
+	<?php echo $form->textFieldRow($model,'bind',array('class'=>'span3', 'placeholder'=>'ex: 1,5')); ?>
 
-	<?php echo $form->textFieldRow($model,'score',array('class'=>'span3')); ?>
+	<?php echo $form->textFieldRow($model,'bind_satuan',array('class'=>'span3', 'placeholder'=>'ex: M (Milyar), Jt(Juta)')); ?>
+
+	<?php echo $form->textFieldRow($model,'score',array('class'=>'span3', 'placeholder'=>'0 - 100')); ?>
 
 	<?php echo $form->textAreaRow($model,'intro',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
 

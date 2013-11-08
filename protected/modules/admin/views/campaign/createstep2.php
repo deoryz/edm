@@ -106,11 +106,21 @@ $this->menu=array(
 	        var iframe = $('.iframe-template').contents();
 
 	        // template basic
-	        iframe.find(".edit-title-email").bind('click', function(){
-				$.fancybox({
-					'content': $('.content-edit-email').html(),
-				});
-	        });
+	        if (iframe.find(".template-name").html()=='basic') {
+		        iframe.find(".edit-title-email").bind('click', function(){
+					$.fancybox({
+						'content': $('.content-edit-email').html(),
+					});
+		        });
+	        };
+	        if (iframe.find(".template-name").html()=='property') {
+		        iframe.find(".button-property-add a").bind('click', function(){
+					$.fancybox({
+						'content': $('.content-add-property-email').html(),
+					});
+					return false;
+		        });
+	        };
 
 	        <?php if ($model->template =='basic'): ?>
 	        iframe.find(".edit-title-email").html($($('#Campaign_html_message').val()).contents().find(".edit-title-email").html());
@@ -136,6 +146,10 @@ $this->menu=array(
 			$('#campaign-form').submit();
 			return false;
 		})
+		$('#edit-title-email-form').live('submit', function() {
+			var iframe = $('.iframe-template').contents();
+			return false;
+		})
 
 	})
 </script>
@@ -145,4 +159,25 @@ $this->menu=array(
 	<input type="text" name="edit-title-email-text" id="edit-title-email-text" class="span6"><br>
 	<input type="submit" class="edit-title-email-btn btn btn-primary" value="Edit Header Text">
 	</form>
+</div>
+
+<div class="content-add-property-email" style="display: none;">
+	<h4>Add Property</h4>
+    <table class="table table-bordered" style="min-width: 500px;">
+    <tr>
+    	<th>Name</th>
+    	<th>Area</th>
+    	<th>&nbsp;</th>
+    </tr>
+    <?php
+    $property = Property::model()->findAll();
+    ?>
+    <?php foreach ($property as $key => $value): ?>
+    <tr>
+		<td><?php echo $value->name ?></td>
+		<td><?php echo $value->area ?></td>
+		<td><a href="<?php echo CHtml::normalizeUrl(array('getproperty', 'id'=>$value->id)); ?>" class="btn btn-primary">Pilih</a></td>
+    </tr>
+    <?php endforeach ?>
+    </table>
 </div>

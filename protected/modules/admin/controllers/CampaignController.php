@@ -308,6 +308,14 @@ class CampaignController extends Controller
 		return $model;
 	}
 
+	protected function actionGetproperty($model)
+	{
+		if(isset($_POST['ajax']) && $_POST['ajax']==='campaign-form')
+		{
+			Yii::app()->end();
+		}
+	}
+
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated

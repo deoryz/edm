@@ -236,8 +236,8 @@ table.info-footer a {
                                                         <td>
                                                             <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; width: 15px;" />
                                                         </td>
-                                                        <td style="vertical-align: top;">
-                                                            <img src="<?php echo $baseUrl; ?>/asset/images/property-1.jpg" style="display:block;" />
+                                                        <td style="vertical-align: top;" class="button-property-add">
+                                                            <a href=""><img src="<?php echo $baseUrl; ?>/asset/images/property-1.jpg" style="display:block;" /></a>
                                                         </td>
                                                         <td style="vertical-align: top; float: right;">
 
