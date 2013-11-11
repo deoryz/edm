@@ -110,4 +110,46 @@ class SettingController extends ControllerAdmin
 			'model'=>$model,
 		));
 	}
+	
+	public function actionUploadimage($type)
+	{
+		$dir = Yii::getPathOfAlias('webroot').'/upload/images/';
+		if ($type == 'image') {
+
+			$_FILES['file']['type'] = strtolower($_FILES['file']['type']);
+
+			if ($_FILES['file']['type'] == 'image/png'
+			|| $_FILES['file']['type'] == 'image/jpg'
+			|| $_FILES['file']['type'] == 'image/gif'
+			|| $_FILES['file']['type'] == 'image/jpeg'
+			|| $_FILES['file']['type'] == 'image/pjpeg')
+			{
+			    // setting file's mysterious name
+			    $file = substr(md5(date('YmdHis').rand(0,10000000)), 0, 5).$_FILES['file']['name'];
+
+			    // copying
+			    move_uploaded_file($_FILES['file']['tmp_name'], $dir.$file);
+
+			    // displaying file
+			    $array = array(
+			        'filelink' => Yii::app()->baseUrl.'/upload/images/'.$file
+			    );
+
+			    echo stripslashes(json_encode($array));
+			}
+		}
+		if ($type == 'clip') {
+
+			$contentType = $_POST['contentType'];
+			$data = base64_decode($_POST['data']);
+
+			$filename = md5(date('YmdHis').rand(0,10000000)).'.png';
+			$file = $dir.$filename;
+
+			file_put_contents($file, $data);
+
+			echo json_encode(array('filelink' => Yii::app()->baseUrl.'/upload/images/'.$filename));
+		}
+	}
+
 }

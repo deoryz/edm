@@ -87,18 +87,40 @@ class CampaignController extends Controller
 	{
 		$model=$this->loadModel($id);
 
-		if(isset($_POST['Campaign']))
+		$this->render('createstep2',array(
+			'model'=>$model,
+		));
+	}
+
+	public function actionCreatestepbasic($id)
+	{
+		$model= new TemplateBasic;
+
+		$model2=$this->loadModel($id);
+
+		if(isset($_POST['TemplateBasic']))
 		{
-			$model->attributes=$_POST['Campaign'];
+			if ($_POST['ajax']=='ajax') {
+				$model->attributes = $_POST['TemplateBasic'];
+				$model2->data = json_encode($model->attributes);
+				$model2->save();
+				$this->renderPartial('template/basic', array('model'=>json_decode($model2->data)));
+				exit;
+			}
+			$model->attributes=$_POST['TemplateBasic'];
 			if($model->validate()){
-				$transaction=$model->dbConnection->beginTransaction();
+				$transaction=$model2->dbConnection->beginTransaction();
 				try
 				{
-					$model->save();
-					Log::createLog("Campaign Controller Update $model->id");
+					$model2->data = json_encode($model->attributes);
+					$model2->template = 'basic';
+					$model2->html_message = $this->renderPartial('template/basic', array('model'=>json_decode($model2->data)), true);
+					$model2->text_message = $this->renderPartial('template/basic_text', array('model'=>json_decode($model2->data)), true);
+					$model2->save();
+					Log::createLog("Campaign Controller Update $model2->id");
 					Yii::app()->user->setFlash('success','Data Edited');
 				    $transaction->commit();
-					$this->redirect(array('createstep3','id'=>$model->id));
+					$this->redirect(array('createstep3','id'=>$model2->id));
 				}
 				catch(Exception $ce)
 				{
@@ -107,8 +129,11 @@ class CampaignController extends Controller
 			}
 		}
 
-		$this->render('createstep2',array(
+		$model->attributes = (array)json_decode($model2->data);
+
+		$this->render('createstepbasic',array(
 			'model'=>$model,
+			'model2'=>$model2,
 		));
 	}
 
@@ -145,7 +170,7 @@ class CampaignController extends Controller
 	{
 		$model=$this->loadModel($id);
 
-		$dataContact = CampaignContact::model()->findAll('group_kontak_id = :group_kontak_id',array(':group_kontak_id'=>$model->id));
+		$dataContact = CampaignContact::model()->findAll('campaign_id = :campaign_id',array(':campaign_id'=>$model->id));
 
 		if(isset($_POST['Campaign']))
 		{
@@ -181,15 +206,13 @@ class CampaignController extends Controller
 			}
 			catch(Exception $ce)
 			{
-				echo $ce;
-				exit;
 			    $transaction->rollback();
 			}
 		}
 
 		$arrayContact = array();
 		foreach ($dataContact as $key => $value) {
-			$arrayContact[] = GroupKontak::model()->findByPk($value->campaign_id)->nama;
+			$arrayContact[] = GroupKontak::model()->findByPk($value->group_kontak_id)->nama;
 		}
 		$model->contact = implode(', ', $arrayContact);
 
@@ -242,7 +265,7 @@ class CampaignController extends Controller
 		$dataContact = CampaignContact::model()->findAll('campaign_id = :campaign_id',array(':campaign_id'=>$model->id));
 		$arrayContact = array();
 		foreach ($dataContact as $key => $value) {
-			$arrayContact[] = $value->campaign_id;
+			$arrayContact[] = $value->group_kontak_id;
 		}
 		$model->contact = $arrayContact;
 
