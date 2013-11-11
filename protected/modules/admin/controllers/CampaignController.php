@@ -137,6 +137,51 @@ class CampaignController extends Controller
 		));
 	}
 
+	public function actionCreatestepproperty($id)
+	{
+		$model= new TemplateBasic;
+
+		$model2=$this->loadModel($id);
+
+		if(isset($_POST['TemplateBasic']))
+		{
+			if ($_POST['ajax']=='ajax') {
+				$model->attributes = $_POST['TemplateBasic'];
+				$model2->data = json_encode($model->attributes);
+				$model2->save();
+				$this->renderPartial('template/basic', array('model'=>json_decode($model2->data)));
+				exit;
+			}
+			$model->attributes=$_POST['TemplateBasic'];
+			if($model->validate()){
+				$transaction=$model2->dbConnection->beginTransaction();
+				try
+				{
+					$model2->data = json_encode($model->attributes);
+					$model2->template = 'basic';
+					$model2->html_message = $this->renderPartial('template/basic', array('model'=>json_decode($model2->data)), true);
+					$model2->text_message = $this->renderPartial('template/basic_text', array('model'=>json_decode($model2->data)), true);
+					$model2->save();
+					Log::createLog("Campaign Controller Update $model2->id");
+					Yii::app()->user->setFlash('success','Data Edited');
+				    $transaction->commit();
+					$this->redirect(array('createstep3','id'=>$model2->id));
+				}
+				catch(Exception $ce)
+				{
+				    $transaction->rollback();
+				}
+			}
+		}
+
+		$model->attributes = (array)json_decode($model2->data);
+
+		$this->render('createstepbasic',array(
+			'model'=>$model,
+			'model2'=>$model2,
+		));
+	}
+
 	public function actionCreatestep3($id)
 	{
 		$model=$this->loadModel($id);
