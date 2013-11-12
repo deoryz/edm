@@ -6,7 +6,8 @@ class TestController extends Controller
 		$messaged = $this->renderPartial('//temp/basic_example',array(
 					// 'model'=>$model,
 				),TRUE);
-		
+		echo $messaged;
+		exit;
 		$config = array(
 			'to'=>array('ibnu@markdesign.net', 'deo@markdesign.net'),
 			'subject'=>'[Hello] Just Test Edm Html',
@@ -27,7 +28,8 @@ class TestController extends Controller
 		$messaged = $this->renderPartial('//temp/example',array(
 					// 'model'=>$model,
 				),TRUE);
-		
+		echo $messaged;
+		exit;
 		$config = array(
 			'to'=>array('ibnu@markdesign.net', 'deo@markdesign.net', 'deoryz@yahoo.co.id'),
 			'subject'=>'[Hello] Just Test Edm Html',

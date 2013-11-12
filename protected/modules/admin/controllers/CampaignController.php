@@ -139,28 +139,28 @@ class CampaignController extends Controller
 
 	public function actionCreatestepproperty($id)
 	{
-		$model= new TemplateBasic;
+		$model= new TemplateProperty;
 
 		$model2=$this->loadModel($id);
 
-		if(isset($_POST['TemplateBasic']))
+		if(isset($_POST['TemplateProperty']))
 		{
 			if ($_POST['ajax']=='ajax') {
-				$model->attributes = $_POST['TemplateBasic'];
+				$model->attributes = $_POST['TemplateProperty'];
 				$model2->data = json_encode($model->attributes);
 				$model2->save();
-				$this->renderPartial('template/basic', array('model'=>json_decode($model2->data)));
+				$this->renderPartial('template/property', array('model'=>json_decode($model2->data)));
 				exit;
 			}
-			$model->attributes=$_POST['TemplateBasic'];
+			$model->attributes=$_POST['TemplateProperty'];
 			if($model->validate()){
 				$transaction=$model2->dbConnection->beginTransaction();
 				try
 				{
 					$model2->data = json_encode($model->attributes);
 					$model2->template = 'basic';
-					$model2->html_message = $this->renderPartial('template/basic', array('model'=>json_decode($model2->data)), true);
-					$model2->text_message = $this->renderPartial('template/basic_text', array('model'=>json_decode($model2->data)), true);
+					$model2->html_message = $this->renderPartial('template/property', array('model'=>json_decode($model2->data)), true);
+					$model2->text_message = $this->renderPartial('template/property_text', array('model'=>json_decode($model2->data)), true);
 					$model2->save();
 					Log::createLog("Campaign Controller Update $model2->id");
 					Yii::app()->user->setFlash('success','Data Edited');
@@ -174,11 +174,17 @@ class CampaignController extends Controller
 			}
 		}
 
+		$modelProperty=new Property('search');
+		$modelProperty->unsetAttributes();  // clear any default values
+		if(isset($_GET['Property']))
+			$modelProperty->attributes=$_GET['Property'];
+
 		$model->attributes = (array)json_decode($model2->data);
 
-		$this->render('createstepbasic',array(
+		$this->render('createstepproperty',array(
 			'model'=>$model,
 			'model2'=>$model2,
+			'modelProperty'=>$modelProperty,
 		));
 	}
 

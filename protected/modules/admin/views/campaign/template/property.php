@@ -1,5 +1,7 @@
-<?php $baseUrl= Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; 
-$url = Yii::app()->request->hostInfo; ?>
+<?php $baseUrl= Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; $url = Yii::app()->request->hostInfo; ?>
+<?php
+    $propertyUtama = Property::model()->with('image')->findByPk($model->property_id[0]);
+?>
 <style type="text/css">
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,300,700);
 
@@ -148,7 +150,8 @@ table.info-footer a {
                                     <p class="margin-text-lefttop" style="margin: 0px;">
                                         <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="height: 5px; width: 26px;" />
                                         <font color="#FFFFFF" style="font-weight:300;" face="'Roboto', Tahoma, arial">
-                                            <span style="font-size: 60px; font-weight:300;">The Hot List</span>
+                                            <span style="font-size: 60px; font-weight:300;">
+                                                <?php echo $model->title ?></span>
                                         </font>
                                     </p>
                                     <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="height: 5px;" />
@@ -156,8 +159,10 @@ table.info-footer a {
                                         <font color="#000" style="font-weight:300;" face="'Roboto', Tahoma, arial">
                                             <span style="font-size: 17px; font-weight:300;">Property Update:</span>
                                             <br>
-                                            <span style="font-size:28px; line-height: 1.3;">October 2013</span>&nbsp;&nbsp;
-                                            <span style="background-color: #fcd000; font-size:17px;">&nbsp;Part 1&nbsp;</span>
+                                            <span style="font-size:28px; line-height: 1.3;">
+                                                <?php echo $model->bulan ?></span>&nbsp;&nbsp;
+                                            <span style="background-color: #fcd000; font-size:17px;">&nbsp;
+                                                <?php echo $model->part ?>&nbsp;</span>
                                         </font>
                                     </p>
                                 </td>
@@ -197,82 +202,82 @@ table.info-footer a {
                                                             <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; width: 15px;" />
                                                         </td>
                                                         <td style="vertical-align: top;">
-                                                            <img src="<?php echo $baseUrl; ?>/asset/images/property-1.jpg" style="display:block;" />
+                                                            <img src="<?php echo Yii::app()->baseUrl.ImageHelper::thumb(229,151, '/images/propertyGallery/'.$propertyUtama->image->image , array('method' => 'adaptiveResize', 'quality' => '90')) ?>" style="display:block;" />
                                                         </td>
                                                         <td style="vertical-align: top; float: right;">
                                                             <table width="275" border="0" cellspacing="0" cellpadding="0">
                                                                 <tr>
                                                                     <td>
                                                                         <font color="#0d2a5f" style="font-weight:300;" face="'Roboto', Tahoma, arial">
-                                                                            <span style="font-size: 15px; font-weight:300;">Rumah Dijual - Surabaya Barat:</span>
+                                                                            <span style="font-size: 15px; font-weight:300;"><?php echo $propertyUtama->type ?> <?php echo $propertyUtama->jenis ?> - <?php echo $propertyUtama->area ?>:</span>
                                                                         </font>
                                                                         <br />
                                                                         <font color="#0d2a5f" style="font-weight:300;" face="'Roboto', Tahoma, arial">
-                                                                            <span style="font-size: 22px; font-weight:400;">Graha Family P 123</span>
+                                                                            <span style="font-size: 22px; font-weight:400;"><?php echo $propertyUtama->name ?></span>
                                                                         </font>
                                                                     </td>
-                                                                    <tr/>
-                                                                    <tr>
-                                                                        <td>&nbsp;</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <table width="255" border="0" cellspacing="0" cellpadding="0">
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-bed.png" style="display:block; float: left; margin-right: 10px;" />
-                                                                                        <font color="#000" style="font-weight:300;" face="'Roboto', Tahoma, arial">
-                                                                                            <span style="font-size: 12px; font-weight:300;">4</span>
-                                                                                        </font>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-shower.png" style="display:block;float: left; margin-right: 10px;" />
-                                                                                        <font color="#000" style="font-weight:300;" face="'Roboto', Tahoma, arial">
-                                                                                            <span style="font-size: 12px; font-weight:300;">5</span>
-                                                                                        </font>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-car.png" style="display:block;float: left; margin-right: 10px;" />
-                                                                                        <font color="#000" style="font-weight:300;" face="'Roboto', Tahoma, arial">
-                                                                                            <span style="font-size: 12px; font-weight:300;">2</span>
-                                                                                        </font>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-lantai_bangunan.png" style="display:block;float: left; margin-right: 10px;" />
-                                                                                        <font color="#000" style="font-weight:300;" face="'Roboto', Tahoma, arial">
-                                                                                            <span style="font-size: 12px; font-weight:300;">270</span>
-                                                                                        </font>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-luas_bangunan.png" style="display:block; float: left; margin-right: 10px;" />
-                                                                                        <font color="#000" style="font-weight:300;" face="'Roboto', Tahoma, arial">
-                                                                                            <span style="font-size: 12px; font-weight:300;">220</span>
-                                                                                        </font>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </table>
-                                                                            <p style="clear:both; height:0px;"></p>
-                                                                        </td>
-                                                                        <tr/>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <table width="265" border="0" cellspacing="0" cellpadding="0">
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                            <font color="#9cd70e" style="font-weight:300;" face="'Roboto', Tahoma, arial">
-                                                                                                <span style="font-size: 50px; font-weight:700;">4.5</span>
-                                                                                                <span style="font-size: 24px; font-weight:400;">M</span>
-                                                                                            </font>
-                                                                                        </td>
-                                                                                        <td style="text-align: right; float: right; margin-top: 15px;"><a target="_blank" href="#"><img src="<?php echo $baseUrl; ?>/asset/images/button-detail.png" style="display:block;" /></a>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </td>
-                                                                        </tr>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>&nbsp;</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <table width="255" border="0" cellspacing="0" cellpadding="0">
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-bed.png" style="display:block; float: left; margin-right: 10px;" />
+                                                                                    <font color="#000" style="font-weight:300;" face="'Roboto', Tahoma, arial">
+                                                                                        <span style="font-size: 12px; font-weight:300;"><?php echo $propertyUtama->bedroom ?></span>
+                                                                                    </font>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-shower.png" style="display:block;float: left; margin-right: 10px;" />
+                                                                                    <font color="#000" style="font-weight:300;" face="'Roboto', Tahoma, arial">
+                                                                                        <span style="font-size: 12px; font-weight:300;"><?php echo $propertyUtama->shower ?></span>
+                                                                                    </font>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-car.png" style="display:block;float: left; margin-right: 10px;" />
+                                                                                    <font color="#000" style="font-weight:300;" face="'Roboto', Tahoma, arial">
+                                                                                        <span style="font-size: 12px; font-weight:300;"><?php echo $propertyUtama->carport ?></span>
+                                                                                    </font>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-lantai_bangunan.png" style="display:block;float: left; margin-right: 10px;" />
+                                                                                    <font color="#000" style="font-weight:300;" face="'Roboto', Tahoma, arial">
+                                                                                        <span style="font-size: 12px; font-weight:300;"><?php echo $propertyUtama->luas_tanah ?></span>
+                                                                                    </font>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-luas_bangunan.png" style="display:block; float: left; margin-right: 10px;" />
+                                                                                    <font color="#000" style="font-weight:300;" face="'Roboto', Tahoma, arial">
+                                                                                        <span style="font-size: 12px; font-weight:300;"><?php echo $propertyUtama->luas_bangunan ?></span>
+                                                                                    </font>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <p style="clear:both; height:0px;"></p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <table width="265" border="0" cellspacing="0" cellpadding="0">
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <font color="#9cd70e" style="font-weight:300;" face="'Roboto', Tahoma, arial">
+                                                                                        <span style="font-size: 50px; font-weight:700;"><?php echo $propertyUtama->bind ?></span>
+                                                                                        <span style="font-size: 24px; font-weight:400;"><?php echo $propertyUtama->bind_satuan ?></span>
+                                                                                    </font>
+                                                                                </td>
+                                                                                <td style="text-align: right; float: right; margin-top: 15px;"><a target="_blank" href="<?php echo $propertyUtama->url ?>"><img src="<?php echo $baseUrl; ?>/asset/images/button-detail.png" style="display:block;" /></a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
                                                             </table>
                                                         </td>
-                                                        </tr>
+                                                    </tr>
                                                 </table>
 
                                                 <table width="535" style="width: 535px; margin: 0 auto;" height="" border="0" cellspacing="0" cellpadding="0">
@@ -299,7 +304,7 @@ table.info-footer a {
                                                                     </td>
                                                                     <td>
                                                                         <font color="#0d2a5f" style="font-weight:300;" face="'Roboto', Tahoma, arial">
-                                                                            <span style="font-size: 15px; font-weight:300;">Lokasi memiliki potensi untuk terus naik dikarenakan rencana pembangunan mal graha family telah disounding dan telah dipastikan pembangunannya.</span>
+                                                                            <span style="font-size: 15px; font-weight:300;"><?php echo $propertyUtama->intro ?></span>
                                                                         </font>
                                                                     </td>
                                                                     <td>
@@ -321,212 +326,217 @@ table.info-footer a {
                                                 </table>
 
                                             </td>
-                                            </tr>
+                                        </tr>
                                     </table>
 
                                 </td>
-                                </tr>
+                            </tr>
 
-                                <?php for ($i=2; $i < 5; $i++) { ?>
-                                <tr>
-                                    <td>
-                                        <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="height: 7px;" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <table bgcolor="#FFF" width="535" style="width: 535px; margin: 0 auto;" border="0" cellspacing="0" cellpadding="0">
-                                            <tr>
-                                                <td>
+                            <?php foreach ($model->property_id as $key => $value): ?>
+                            <?php if ($key>0): ?>
+                            <?php
+                                $property = Property::model()->with('image')->findByPk($value);
+                            ?>
+                            <tr>
+                                <td>
+                                    <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="height: 7px;" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table bgcolor="#FFF" width="535" style="width: 535px; margin: 0 auto;" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td>
 
-                                                    <table width="535" style="width: 535px; margin: 0 auto;" height="" border="0" cellspacing="0" cellpadding="0">
-                                                        <tr>
-                                                            <td colspan="2">
-                                                                <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; height: 15px;" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td rowspan="2">
-                                                                <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; width: 15px;" />
-                                                            </td>
-                                                            <td rowspan="2" style="vertical-align: top;">
-                                                                <img src="<?php echo $baseUrl; ?>/asset/images/property-<?php echo $i; ?>.jpg" style="display:block;" />
-                                                            </td>
-                                                            <td style="vertical-align: top; float: right;">
-                                                                <table width="270" border="0" cellspacing="0" cellpadding="0">
-                                                                    <tr>
-                                                                        <td>
-                                                                            <font color="#0d2a5f" style="font-weight:300;" face="'Roboto', Tahoma, arial">
-                                                                                <span style="font-size: 15px; font-weight:300;">Rumah Dijual - Surabaya Barat:</span>
-                                                                            </font>
-                                                                            <br />
-                                                                            <font color="#0d2a5f" style="font-weight:300;" face="'Roboto', Tahoma, arial">
-                                                                                <span style="font-size: 19px; font-weight:400;">Citraland Taman Gapura EE 2</span>
-                                                                            </font>
-                                                                        </td>
-                                                                        <tr/>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <table width="255" border="0" cellspacing="0" cellpadding="0">
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                            <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-lantai_bangunan.png" style="display:block;float: left; margin-right: 10px;" />
-                                                                                            <font color="#000" style="font-weight:300;" face="'Roboto', Tahoma, arial">
-                                                                                                <span style="font-size: 12px; font-weight:300;">270</span>
-                                                                                            </font>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-luas_bangunan.png" style="display:block; float: left; margin-right: 10px;" />
-                                                                                            <font color="#000" style="font-weight:300;" face="'Roboto', Tahoma, arial">
-                                                                                                <span style="font-size: 12px; font-weight:300;">220</span>
-                                                                                            </font>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                                <p style="clear:both; height:0px;"></p>
-                                                                            </td>
-                                                                            <tr/>
-                                                                </table>
-                                                            </td>
-                                                            <td style="vertical-align: top;">
-                                                                <img src="<?php echo $baseUrl; ?>/asset/images/cw-score.png" style="display: block;" />
-                                                            </td>
-                                                            <td rowspan="2">
-                                                                <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="width: 15px;" />
-                                                            </td>
-                                                            </tr>
+                                                <table width="535" style="width: 535px; margin: 0 auto;" height="" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; height: 15px;" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="2">
+                                                            <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; width: 15px;" />
+                                                        </td>
+                                                        <td rowspan="2" style="vertical-align: top;">
+                                                            <img src="<?php echo Yii::app()->baseUrl.ImageHelper::thumb(173,114, '/images/propertyGallery/'.$property->image->image , array('method' => 'adaptiveResize', 'quality' => '90')) ?>" style="display:block;" />
+                                                        </td>
+                                                        <td style="vertical-align: top; float: right;">
+                                                            <table width="270" border="0" cellspacing="0" cellpadding="0">
+                                                                <tr>
+                                                                    <td>
+                                                                        <font color="#0d2a5f" style="font-weight:300;" face="'Roboto', Tahoma, arial">
+                                                                            <span style="font-size: 15px; font-weight:300;"><?php echo $property->type ?> <?php echo $property->jenis ?> - <?php echo $property->area ?>:</span>
+                                                                        </font>
+                                                                        <br />
+                                                                        <font color="#0d2a5f" style="font-weight:300;" face="'Roboto', Tahoma, arial">
+                                                                            <span style="font-size: 19px; font-weight:400;"><?php echo $property->name ?></span>
+                                                                        </font>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <table width="255" border="0" cellspacing="0" cellpadding="0">
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-lantai_bangunan.png" style="display:block;float: left; margin-right: 10px;" />
+                                                                                    <font color="#000" style="font-weight:300;" face="'Roboto', Tahoma, arial">
+                                                                                        <span style="font-size: 12px; font-weight:300;"><?php echo $property->luas_tanah ?></span>
+                                                                                    </font>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-luas_bangunan.png" style="display:block; float: left; margin-right: 10px;" />
+                                                                                    <font color="#000" style="font-weight:300;" face="'Roboto', Tahoma, arial">
+                                                                                        <span style="font-size: 12px; font-weight:300;"><?php echo $property->luas_bangunan ?></span>
+                                                                                    </font>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <p style="clear:both; height:0px;"></p>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td style="vertical-align: top;">
+                                                            <img src="<?php echo $baseUrl; ?>/asset/images/cw-score.png" style="display: block;" />
+                                                        </td>
+                                                        <td rowspan="2">
+                                                            <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="width: 15px;" />
+                                                        </td>
+                                                    </tr>
 
-                                                            <tr>
-                                                                <td colspan="2">
-                                                                    <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; height: 8px;" />
-                                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                                        <tr>
-                                                                            <td>
-                                                                                <font color="#9cd70e" style="font-weight:300;" face="'Roboto', Tahoma, arial">
-                                                                                    <span style="font-size: 29px; font-weight:700;">4.5</span>
-                                                                                    <span style="font-size: 15px; font-weight:400;">M</span>
-                                                                                </font>
-                                                                            </td>
-                                                                            <td style="text-align: right; float: right;"><a target="_blank" href="#"><img src="<?php echo $baseUrl; ?>/asset/images/button-detail.png" style="display:block;" /></a>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; height: 8px;" />
+                                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                <tr>
+                                                                    <td>
+                                                                        <font color="#9cd70e" style="font-weight:300;" face="'Roboto', Tahoma, arial">
+                                                                            <span style="font-size: 29px; font-weight:700;"><?php echo $property->bind ?></span>
+                                                                            <span style="font-size: 15px; font-weight:400;"><?php echo $property->bind_satuan ?></span>
+                                                                        </font>
+                                                                    </td>
+                                                                    <td style="text-align: right; float: right;"><a target="_blank" href="<?php echo $property->url ?>"><img src="<?php echo $baseUrl; ?>/asset/images/button-detail.png" style="display:block;" /></a>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
 
-                                                            <tr>
-                                                                <td colspan="2">
-                                                                    <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; height: 12px;" />
-                                                                </td>
-                                                            </tr>
-                                                    </table>
-                                                </td>
-                                                </tr>
-                                        </table>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; height: 12px;" />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
 
-                                    </td>
-                                    </tr>
-                                    <?php } ?>
+                                </td>
+                            </tr>
+                            <?php endif ?>
+                            <?php endforeach ?>
                         </table>
 
                     </td>
-                    </tr>
-                    <!-- /. End Text Content -->
-                    <tr>
-                        <td>&nbsp;</td>
-                    </tr>
+                </tr>
+                <!-- /. End Text Content -->
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
 
-                    <tr>
-                        <td>
-                            <p style="margin: 0px; margin-left: 28px;">
-                                <font color="#000" style="font-weight:300; font-size: 15px;" face="'Roboto', Tahoma, arial">
-                                    <span style="font-size: 15px">
-                                        <strong>Hubungi Christian di:</strong>
-                                    </span>
-                                </font>
-                            </p>
+                <tr>
+                    <td>
+                        <p style="margin: 0px; margin-left: 28px;">
+                            <font color="#000" style="font-weight:300; font-size: 15px;" face="'Roboto', Tahoma, arial">
+                                <span style="font-size: 15px">
+                                    <strong>Hubungi Christian di:</strong>
+                                </span>
+                            </font>
+                        </p>
 
-                            <p style="margin: 0px;">
-                                <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; height: 11px;" />
-                                <table class="info-footer" style="width: 532px;
+                        <p style="margin: 0px;">
+                            <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; height: 11px;" />
+                            <table class="info-footer" style="width: 532px;
 margin: 0px 0px 0px 24px;" width="545" border="0" align="center" cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td>
-                                            <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-ipod.png" width="14" height="21" />&nbsp;
-                                            <font color="#000" style="font-weight:300;" font-size: 13.5px; face="'Roboto', Tahoma, arial">
-                                                <span style="font-size: 13.5px">081 2352 7916, 031 7099 7273</span>
-                                            </font>
-                                        </td>
-                                        <td>
-                                            <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-bb.png" width="16" height="12" />&nbsp;
-                                            <font color="#000" style="font-weight:300;" font-size: 13.5px; face="'Roboto', Tahoma, arial">
-                                                <span style="font-size: 13.5px">2937C1CF</span>
-                                            </font>
-                                        </td>
-                                        <td align="right">
-                                            <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-mail.png" />&nbsp;
-                                            <font color="#000" style="font-weight:300;" font-size: 13.5px; face="'Roboto', Tahoma, arial">
-                                                <span style="font-size: 13.5px"><a href="mailto:christian@forumproperty.net">christian@forumproperty.net</a>
-                                                </span>
-                                            </font>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4">
-                                            <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; height: 10px;" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-facebook.png" />&nbsp;&nbsp;&nbsp;
-                                            <font color="#000" style="font-weight:300;" font-size: 13.5px; face="'Roboto', Tahoma, arial">
-                                                <span style="font-size: 13.5px"><a target="_blank" href="http://www.facebook.com/forumproperty">facebook.com/forumproperty</a>
-                                                </span>
-                                            </font>
-                                        </td>
+                                <tr>
+                                    <td>
+                                        <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-ipod.png" width="14" height="21" />&nbsp;
+                                        <font color="#000" style="font-weight:300;" font-size: 13.5px; face="'Roboto', Tahoma, arial">
+                                            <span style="font-size: 13.5px">081 2352 7916, 031 7099 7273</span>
+                                        </font>
+                                    </td>
+                                    <td>
+                                        <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-bb.png" width="16" height="12" />&nbsp;
+                                        <font color="#000" style="font-weight:300;" font-size: 13.5px; face="'Roboto', Tahoma, arial">
+                                            <span style="font-size: 13.5px">2937C1CF</span>
+                                        </font>
+                                    </td>
+                                    <td align="right">
+                                        <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-mail.png" />&nbsp;
+                                        <font color="#000" style="font-weight:300;" font-size: 13.5px; face="'Roboto', Tahoma, arial">
+                                            <span style="font-size: 13.5px"><a href="mailto:christian@forumproperty.net">christian@forumproperty.net</a>
+                                            </span>
+                                        </font>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; height: 10px;" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src="<?php echo $baseUrl; ?>/asset/images/icons/icon-facebook.png" />&nbsp;&nbsp;&nbsp;
+                                        <font color="#000" style="font-weight:300;" font-size: 13.5px; face="'Roboto', Tahoma, arial">
+                                            <span style="font-size: 13.5px"><a target="_blank" href="http://www.facebook.com/forumproperty">facebook.com/forumproperty</a>
+                                            </span>
+                                        </font>
+                                    </td>
 
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                </table>
-                            </p>
-                            <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; height: 12px;" />
-                        </td>
-                    </tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            </table>
+                        </p>
+                        <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; height: 12px;" />
+                    </td>
+                </tr>
 
 
             </table>
         </td>
-        </tr>
+    </tr>
 
-        <!-- Bottom Content -->
-        <tr>
-            <td style="background-color: #000;">
-                <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; height: 12px;" />
-                <table style="width: 532px;
+    <!-- Bottom Content -->
+    <tr>
+        <td style="background-color: #000;">
+            <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; height: 12px;" />
+            <table style="width: 532px;
 margin: 0px 0px 0px 24px;" width="545" border="0" align="center" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td align="left">
-                            <!-- <p class="text-content"> -->
-                            <font color="#FFF" style="font-weight:300; font-size: 11px;" face="'Roboto', Tahoma, arial">
-                                <span style="font-size: 11px">
-                                    Jika Anda merasa terganggu dengan email Christian, silahkan klik di sini.
-                                </span>
-                            </font>
-                            <!-- </p> -->
-                        </td>
-                        <td align="right">
-                            <font color="#FFF" style="text-align: right; font-weight:300; font-size: 11px;" face="'Roboto', Tahoma, arial">
-                                <span style="font-size: 11px">
-                                    Powered by Mark Design.
-                                </span>
-                            </font>
-                        </td>
-                    </tr>
-                </table>
-                <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; height: 12px;" />
-            </td>
-        </tr>
+                <tr>
+                    <td align="left">
+                        <!-- <p class="text-content"> -->
+                        <font color="#FFF" style="font-weight:300; font-size: 11px;" face="'Roboto', Tahoma, arial">
+                            <span style="font-size: 11px">
+                                Jika Anda merasa terganggu dengan email Christian, silahkan klik di sini.
+                            </span>
+                        </font>
+                        <!-- </p> -->
+                    </td>
+                    <td align="right">
+                        <font color="#FFF" style="text-align: right; font-weight:300; font-size: 11px;" face="'Roboto', Tahoma, arial">
+                            <span style="font-size: 11px">
+                                Powered by Mark Design.
+                            </span>
+                        </font>
+                    </td>
+                </tr>
+            </table>
+            <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; height: 12px;" />
+        </td>
+    </tr>
 </table>
 
 <!-- </body>
