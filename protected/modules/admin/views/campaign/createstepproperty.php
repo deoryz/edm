@@ -89,6 +89,7 @@ $this->menu=array(
     		<th width="100">Delete</th>
     	</tr>
     	<tbody class="property-choose">
+    	<?php if (count($model->property_id)>0): ?>
     	<?php foreach ($model->property_id as $key => $value): ?>
     	<?php
     	$property = Property::model()->findByPk($value);
@@ -104,6 +105,7 @@ $this->menu=array(
     		</td>
     	</tr>
     	<?php endforeach ?>
+    	<?php endif ?>
     	</tbody>
     </table>
 	<?php $this->widget('bootstrap.widgets.TbButton', array(

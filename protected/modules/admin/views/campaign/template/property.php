@@ -202,7 +202,7 @@ table.info-footer a {
                                                             <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; width: 15px;" />
                                                         </td>
                                                         <td style="vertical-align: top;">
-                                                            <img src="<?php echo Yii::app()->baseUrl.ImageHelper::thumb(229,151, '/images/propertyGallery/'.$propertyUtama->image->image , array('method' => 'adaptiveResize', 'quality' => '90')) ?>" style="display:block;" />
+                                                            <img src="<?php echo $baseUrl.ImageHelper::thumb(229,151, '/images/propertyGallery/'.$propertyUtama->image->image , array('method' => 'adaptiveResize', 'quality' => '90')) ?>" style="display:block;" />
                                                         </td>
                                                         <td style="vertical-align: top; float: right;">
                                                             <table width="275" border="0" cellspacing="0" cellpadding="0">
@@ -308,7 +308,7 @@ table.info-footer a {
                                                                         </font>
                                                                     </td>
                                                                     <td>
-                                                                        <img src="<?php echo $baseUrl; ?>/asset/images/cw-score.png" style="display:block;" />
+                                                                        <img src="<?php echo $baseUrl; ?>/asset/images/cw-score-<?php echo $propertyUtama->score ?>.png" style="display:block;" />
                                                                     </td>
                                                                     <td>
                                                                         <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; width: 15px;" />
@@ -359,7 +359,7 @@ table.info-footer a {
                                                             <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; width: 15px;" />
                                                         </td>
                                                         <td rowspan="2" style="vertical-align: top;">
-                                                            <img src="<?php echo Yii::app()->baseUrl.ImageHelper::thumb(173,114, '/images/propertyGallery/'.$property->image->image , array('method' => 'adaptiveResize', 'quality' => '90')) ?>" style="display:block;" />
+                                                            <img src="<?php echo $baseUrl.ImageHelper::thumb(173,114, '/images/propertyGallery/'.$property->image->image , array('method' => 'adaptiveResize', 'quality' => '90')) ?>" style="display:block;" />
                                                         </td>
                                                         <td style="vertical-align: top; float: right;">
                                                             <table width="270" border="0" cellspacing="0" cellpadding="0">
@@ -398,7 +398,7 @@ table.info-footer a {
                                                             </table>
                                                         </td>
                                                         <td style="vertical-align: top;">
-                                                            <img src="<?php echo $baseUrl; ?>/asset/images/cw-score.png" style="display: block;" />
+                                                            <img src="<?php echo $baseUrl; ?>/asset/images/cw-score-<?php echo $property->score ?>.png" style="display: block;" />
                                                         </td>
                                                         <td rowspan="2">
                                                             <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="width: 15px;" />
@@ -407,11 +407,14 @@ table.info-footer a {
 
                                                     <tr>
                                                         <td colspan="2">
-                                                            <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; height: 8px;" />
                                                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                                 <tr>
                                                                     <td>
+                                                                        <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; width: 5px;" />            
+                                                                    </td>
+                                                                    <td>
                                                                         <font color="#9cd70e" style="font-weight:300;" face="'Roboto', Tahoma, arial">
+                                                                            <img src="<?php echo $baseUrl; ?>/asset/images/trans.gif" style="display:block; width: 5px;" />
                                                                             <span style="font-size: 29px; font-weight:700;"><?php echo $property->bind ?></span>
                                                                             <span style="font-size: 15px; font-weight:400;"><?php echo $property->bind_satuan ?></span>
                                                                         </font>
