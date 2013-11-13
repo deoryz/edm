@@ -47,12 +47,15 @@ class Property extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('type, jenis, area, bedroom, shower, carport, luas_tanah, luas_bangunan, harga, score, intro, deskripsi, bind', 'required'),
+			array('type, jenis, area, bedroom, shower, carport, luas_tanah, luas_bangunan, harga, score, intro, deskripsi, bind, name', 'required'),
 			array('bedroom, shower, carport, luas_tanah, luas_bangunan, harga, score', 'numerical', 'integerOnly'=>true),
 			array('type, jenis', 'length', 'max'=>9),
 			array('bind', 'length', 'max'=>10),
+			array('name', 'length', 'max'=>50),
+			array('bind_satuan', 'length', 'max'=>5),
 			array('area', 'length', 'max'=>225),
 			array('type, jenis, area_lain', 'safe'),
+			array('url', 'url'),
 
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -68,6 +71,7 @@ class Property extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'image'=>array(self::HAS_ONE, 'PropertyGallery', 'property_id'),
 		);
 	}
 

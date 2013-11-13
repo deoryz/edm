@@ -57,6 +57,8 @@ class CampaignController extends Controller
 				$transaction=$model->dbConnection->beginTransaction();
 				try
 				{
+					$model->tgl_input = date("Y-m-d H:i:s");
+					$model->tgl_update = date("Y-m-d H:i:s");
 					$model->save();
 
 					foreach ($_POST['Campaign']['contact'] as $key => $value) {
@@ -86,19 +88,44 @@ class CampaignController extends Controller
 	public function actionCreatestep2($id)
 	{
 		$model=$this->loadModel($id);
+		if ($model->template != '' AND $_GET['pilih']==false) {
+			$this->redirect(array('createstep'.$model->template, 'id'=>$id));
+		}
+		$this->render('createstep2',array(
+			'model'=>$model,
+		));
+	}
 
-		if(isset($_POST['Campaign']))
+	public function actionCreatestepbasic($id)
+	{
+		$model= new TemplateBasic;
+
+		$model2=$this->loadModel($id);
+
+		if(isset($_POST['TemplateBasic']))
 		{
-			$model->attributes=$_POST['Campaign'];
+			if ($_POST['ajax']=='ajax') {
+				$model->attributes = $_POST['TemplateBasic'];
+				$model2->data = json_encode($model->attributes);
+				$model2->save();
+				$this->renderPartial('template/basic', array('model'=>json_decode($model2->data)));
+				exit;
+			}
+			$model->attributes=$_POST['TemplateBasic'];
 			if($model->validate()){
-				$transaction=$model->dbConnection->beginTransaction();
+				$transaction=$model2->dbConnection->beginTransaction();
 				try
 				{
-					$model->save();
-					Log::createLog("Campaign Controller Update $model->id");
+					$model2->data = json_encode($model->attributes);
+					$model2->template = 'basic';
+					$model2->tgl_update = date("Y-m-d H:i:s");
+					$model2->html_message = $this->renderPartial('template/basic', array('model'=>json_decode($model2->data)), true);
+					$model2->text_message = $this->renderPartial('template/basic_text', array('model'=>json_decode($model2->data)), true);
+					$model2->save();
+					Log::createLog("Campaign Controller Update $model2->id");
 					Yii::app()->user->setFlash('success','Data Edited');
 				    $transaction->commit();
-					$this->redirect(array('createstep3','id'=>$model->id));
+					$this->redirect(array('createstep3','id'=>$model2->id));
 				}
 				catch(Exception $ce)
 				{
@@ -107,8 +134,63 @@ class CampaignController extends Controller
 			}
 		}
 
-		$this->render('createstep2',array(
+		$model->attributes = (array)json_decode($model2->data);
+
+		$this->render('createstepbasic',array(
 			'model'=>$model,
+			'model2'=>$model2,
+		));
+	}
+
+	public function actionCreatestepproperty($id)
+	{
+		$model= new TemplateProperty;
+
+		$model2=$this->loadModel($id);
+
+		if(isset($_POST['TemplateProperty']))
+		{
+			if ($_POST['ajax']=='ajax') {
+				$model->attributes = $_POST['TemplateProperty'];
+				$model2->data = json_encode($model->attributes);
+				$model2->save();
+				$this->renderPartial('template/property', array('model'=>json_decode($model2->data)));
+				exit;
+			}
+			$model->attributes=$_POST['TemplateProperty'];
+			if($model->validate()){
+				$transaction=$model2->dbConnection->beginTransaction();
+				try
+				{
+					$model2->data = json_encode($model->attributes);
+					$model2->tgl_update = date("Y-m-d H:i:s");
+					$model2->template = 'property';
+					$model2->html_message = $this->renderPartial('template/property', array('model'=>json_decode($model2->data)), true);
+					$model2->text_message = $this->renderPartial('template/property_text', array('model'=>json_decode($model2->data)), true);
+					$model2->save();
+					Log::createLog("Campaign Controller Update $model2->id");
+					Yii::app()->user->setFlash('success','Data Edited');
+				    $transaction->commit();
+					$this->redirect(array('createstep3','id'=>$model2->id));
+				}
+				catch(Exception $ce)
+				{
+				    $transaction->rollback();
+				}
+			}
+		}
+
+		$modelProperty=new Property('search');
+		$modelProperty->unsetAttributes();  // clear any default values
+		if(isset($_GET['Property']))
+			$modelProperty->attributes=$_GET['Property'];
+
+		$model->attributes = (array)json_decode($model2->data);
+
+		$this->render('createstepproperty',array(
+			'model'=>$model,
+			'model2'=>$model2,
+			'modelProperty'=>$modelProperty,
 		));
 	}
 
@@ -123,6 +205,7 @@ class CampaignController extends Controller
 				$transaction=$model->dbConnection->beginTransaction();
 				try
 				{
+					$model->tgl_update = date("Y-m-d H:i:s");
 					$model->save();
 					Log::createLog("Campaign Controller Update $model->id");
 					Yii::app()->user->setFlash('success','Data Edited');
@@ -145,7 +228,7 @@ class CampaignController extends Controller
 	{
 		$model=$this->loadModel($id);
 
-		$dataContact = CampaignContact::model()->findAll('group_kontak_id = :group_kontak_id',array(':group_kontak_id'=>$model->id));
+		$dataContact = CampaignContact::model()->findAll('campaign_id = :campaign_id',array(':campaign_id'=>$model->id));
 
 		if(isset($_POST['Campaign']))
 		{
@@ -172,6 +255,7 @@ class CampaignController extends Controller
 						$modelOutbox->save();
 					}
 				}
+				$model->tgl_update = date("Y-m-d H:i:s");
 				$model->status = 'terkirim';
 				$model->save();
 				Log::createLog("Campaign Send Update $model->id");
@@ -181,15 +265,13 @@ class CampaignController extends Controller
 			}
 			catch(Exception $ce)
 			{
-				echo $ce;
-				exit;
 			    $transaction->rollback();
 			}
 		}
 
 		$arrayContact = array();
 		foreach ($dataContact as $key => $value) {
-			$arrayContact[] = GroupKontak::model()->findByPk($value->campaign_id)->nama;
+			$arrayContact[] = GroupKontak::model()->findByPk($value->group_kontak_id)->nama;
 		}
 		$model->contact = implode(', ', $arrayContact);
 
@@ -217,6 +299,7 @@ class CampaignController extends Controller
 				$transaction=$model->dbConnection->beginTransaction();
 				try
 				{
+					$model->tgl_update = date("Y-m-d H:i:s");
 					$model->save();
 
 					CampaignContact::model()->deleteAll('campaign_id = :campaign_id',array(':campaign_id'=>$model->id));
@@ -242,7 +325,7 @@ class CampaignController extends Controller
 		$dataContact = CampaignContact::model()->findAll('campaign_id = :campaign_id',array(':campaign_id'=>$model->id));
 		$arrayContact = array();
 		foreach ($dataContact as $key => $value) {
-			$arrayContact[] = $value->campaign_id;
+			$arrayContact[] = $value->group_kontak_id;
 		}
 		$model->contact = $arrayContact;
 
@@ -306,6 +389,14 @@ class CampaignController extends Controller
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
+	}
+
+	protected function actionGetproperty($model)
+	{
+		if(isset($_POST['ajax']) && $_POST['ajax']==='campaign-form')
+		{
+			Yii::app()->end();
+		}
 	}
 
 	/**

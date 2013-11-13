@@ -88,6 +88,8 @@ return array(
 				'<controller:\w+[^admin]>/<action:\w+>/*'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 
+				''=>'admin/site/index',
+
 
 			),
 		),

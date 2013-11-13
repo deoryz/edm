@@ -179,12 +179,13 @@ class PropertyController extends Controller
 				}
 			}
 		}
-		if($model->area != 'Surabaya Barat'
-		|| da_area != 'Surabaya Timur'
-		 || da_area != 'Surabaya Utara'
-		 || da_area != 'Surabaya Selatan'
-		 || da_area != 'Surabaya Pusat'
+		if($model->area == 'Surabaya Barat'
+		OR $model->area == 'Surabaya Timur'
+		OR $model->area == 'Surabaya Utara'
+		OR $model->area == 'Surabaya Selatan'
+		OR $model->area == 'Surabaya Pusat'
 		){
+		}else{
 			$model->area_lain = $model->area;
 			$model->area = 'Lainnya';
 		}

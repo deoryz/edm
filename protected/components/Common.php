@@ -106,11 +106,11 @@ class Common {
         
         $mail->IsSMTP();  // telling the class to use SMTP
         $mail->Mailer = "smtp";
-        $mail->Host = "ssl://smtp.gmail.com";
-        $mail->Port = 465;
+        $mail->Host = Yii::app()->params['smtp_host'];
+        $mail->Port = Yii::app()->params['smtp_port'];
         $mail->SMTPAuth = true; // turn on SMTP authentication
-        $mail->Username = "deo@markdesign.net"; // SMTP username
-        $mail->Password = "markdesigndeo"; // SMTP password 
+        $mail->Username = Yii::app()->params['smtp_username']; // SMTP username
+        $mail->Password = Yii::app()->params['smtp_password']; // SMTP password 
         
         $mail->ClearAddresses();
 

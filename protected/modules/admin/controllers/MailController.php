@@ -1,14 +1,13 @@
 <?php
 
-class MailController extends Controller
+class MailController extends ControllerAdmin
 {
 
 	public function actionIndex()
 	{
-
 		$criteria = new CDbCriteria;
 		$criteria->condition = "status LIKE '0'";
-		$criteria->limit = 5;
+		$criteria->limit = 10;
 		$model = Outbox::model()->findAll($criteria);
 		foreach ($model as $key => $value) {
 			$config = array(

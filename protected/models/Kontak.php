@@ -38,9 +38,10 @@ class Kontak extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nama, email, status', 'required'),
+			array('nama, email, status, nick', 'required'),
 			array('group_id, status', 'numerical', 'integerOnly'=>true),
 			array('nama, email', 'length', 'max'=>225),
+			array('nick', 'length', 'max'=>100),
 			array('email', 'email'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -71,6 +72,7 @@ class Kontak extends CActiveRecord
 			'nama' => 'Nama',
 			'email' => 'Email',
 			'status' => 'Status',
+			'nick' => 'Nick',
 		);
 	}
 
@@ -88,6 +90,7 @@ class Kontak extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('group_id',$this->group_id);
 		$criteria->compare('nama',$this->nama,true);
+		$criteria->compare('nick',$this->nick,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('status',$this->status);
 

@@ -19,8 +19,8 @@ $this->menu=array(
 		'type',
 		'jenis',
 		'area',
-		'bedroom',
-		'shower',
+		'name',
+		'score',
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 			'template'=>'{update} {delete}'

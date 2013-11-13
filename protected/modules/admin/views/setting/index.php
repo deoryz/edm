@@ -46,6 +46,8 @@ $this->menu=array(
 					'contentCSS'=>Yii::app()->baseUrl.'/asset/css/styles-text.css',
 				));
 				
+			} elseif($value['data']->type=='password') {
+				$textField = CHtml::passwordField('Setting['.$value['data']->name.']['.$lang->code.']', $v->value, array('class'=>'span5'));
 			} else {
 				$textField = CHtml::textField('Setting['.$value['data']->name.']['.$lang->code.']', $v->value, array('class'=>'span5'));
 			}
@@ -101,6 +103,8 @@ $this->menu=array(
 					'contentCSS'=>Yii::app()->baseUrl.'/asset/css/styles-text.css',
 				));
 				?>
+				<?php elseif ($value['data']->type=='password'): ?>
+				<?php echo CHtml::passwordField('Setting['.$value['data']->name.']', $value['data']->value, array('class'=>'span5')) ?>
 				<?php else: ?>
 				<?php echo CHtml::textField('Setting['.$value['data']->name.']', $value['data']->value, array('class'=>'span5')) ?>
 				<?php endif ?>

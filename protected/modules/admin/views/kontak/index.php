@@ -19,6 +19,7 @@ $this->menu=array(
 		// 'id',
 		// 'group_id',
 		'nama',
+		'nick',
 		'email',
 		array(
 			'name'=>'status',

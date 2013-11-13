@@ -20,6 +20,8 @@
 
 	<?php echo $form->textFieldRow($model,'nama',array('class'=>'span5','maxlength'=>225)); ?>
 
+	<?php echo $form->textFieldRow($model,'nick',array('class'=>'span5','maxlength'=>225)); ?>
+
 	<?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>225)); ?>
 
 	<?php echo $form->dropDownListRow($model,'status',array(
