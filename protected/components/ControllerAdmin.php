@@ -14,6 +14,7 @@ class ControllerAdmin extends CController
 	 * @var array context menu items. This property will be assigned to {@link CMenu::items}.
 	 */
 	public $menu=array();
+	public $setting=array();
 	/**
 	 * @var array the breadcrumbs of the current page. The value of this property will
 	 * be assigned to {@link CBreadcrumbs::links}. Please refer to {@link CBreadcrumbs::links}
@@ -22,6 +23,8 @@ class ControllerAdmin extends CController
 	public $breadcrumbs=array();
 	public function beforeAction($action)
 	{
+		$this->setting = Setting::model()->getSetting(Yii::app()->language);
+		Yii::app()->params = $this->setting;
 		return true;
 	}
 }

@@ -57,6 +57,8 @@ class CampaignController extends Controller
 				$transaction=$model->dbConnection->beginTransaction();
 				try
 				{
+					$model->tgl_input = date("Y-m-d H:i:s");
+					$model->tgl_update = date("Y-m-d H:i:s");
 					$model->save();
 
 					foreach ($_POST['Campaign']['contact'] as $key => $value) {
@@ -86,7 +88,9 @@ class CampaignController extends Controller
 	public function actionCreatestep2($id)
 	{
 		$model=$this->loadModel($id);
-
+		if ($model->template != '' AND $_GET['pilih']==false) {
+			$this->redirect(array('createstep'.$model->template, 'id'=>$id));
+		}
 		$this->render('createstep2',array(
 			'model'=>$model,
 		));
@@ -114,6 +118,7 @@ class CampaignController extends Controller
 				{
 					$model2->data = json_encode($model->attributes);
 					$model2->template = 'basic';
+					$model2->tgl_update = date("Y-m-d H:i:s");
 					$model2->html_message = $this->renderPartial('template/basic', array('model'=>json_decode($model2->data)), true);
 					$model2->text_message = $this->renderPartial('template/basic_text', array('model'=>json_decode($model2->data)), true);
 					$model2->save();
@@ -158,7 +163,8 @@ class CampaignController extends Controller
 				try
 				{
 					$model2->data = json_encode($model->attributes);
-					$model2->template = 'basic';
+					$model2->tgl_update = date("Y-m-d H:i:s");
+					$model2->template = 'property';
 					$model2->html_message = $this->renderPartial('template/property', array('model'=>json_decode($model2->data)), true);
 					$model2->text_message = $this->renderPartial('template/property_text', array('model'=>json_decode($model2->data)), true);
 					$model2->save();
@@ -199,6 +205,7 @@ class CampaignController extends Controller
 				$transaction=$model->dbConnection->beginTransaction();
 				try
 				{
+					$model->tgl_update = date("Y-m-d H:i:s");
 					$model->save();
 					Log::createLog("Campaign Controller Update $model->id");
 					Yii::app()->user->setFlash('success','Data Edited');
@@ -248,6 +255,7 @@ class CampaignController extends Controller
 						$modelOutbox->save();
 					}
 				}
+				$model->tgl_update = date("Y-m-d H:i:s");
 				$model->status = 'terkirim';
 				$model->save();
 				Log::createLog("Campaign Send Update $model->id");
@@ -291,6 +299,7 @@ class CampaignController extends Controller
 				$transaction=$model->dbConnection->beginTransaction();
 				try
 				{
+					$model->tgl_update = date("Y-m-d H:i:s");
 					$model->save();
 
 					CampaignContact::model()->deleteAll('campaign_id = :campaign_id',array(':campaign_id'=>$model->id));

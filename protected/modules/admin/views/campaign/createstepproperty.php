@@ -9,7 +9,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Template Basic</h1>
+<h1>Template Property</h1>
 <?php $this->widget('bootstrap.widgets.TbButtonGroup',array('buttons'=>$this->menu,)); ?><br/><br/>
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
@@ -89,6 +89,21 @@ $this->menu=array(
     		<th width="100">Delete</th>
     	</tr>
     	<tbody class="property-choose">
+    	<?php foreach ($model->property_id as $key => $value): ?>
+    	<?php
+    	$property = Property::model()->findByPk($value);
+		$str = $property->type . ' ' . $property->jenis . ' ' . $property->area . ' - ' . $property->name . ' (' . $property->score . ') ';
+		?>
+    	<tr>
+    		<td>
+    			<input type="hidden" name="TemplateProperty[property_id][]" value="<?php echo $value ?>" >
+				<?php echo $str ?>
+    		</td>
+    		<td>
+    			<a href="#" class="btn btn-primary btn-property-delete">Delete</a>
+    		</td>
+    	</tr>
+    	<?php endforeach ?>
     	</tbody>
     </table>
 	<?php $this->widget('bootstrap.widgets.TbButton', array(
@@ -110,8 +125,8 @@ $this->menu=array(
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
 			// 'buttonType'=>'submit',
 			// 'type'=>'info',
-			'url'=>CHtml::normalizeUrl(array('createstep2', 'id'=>$_GET['id'])),
-			'label'=>'back',
+			'url'=>CHtml::normalizeUrl(array('createstep2', 'id'=>$_GET['id'], 'pilih'=>true)),
+			'label'=>'Pilih Template',
 		)); ?>
 	</div>
 
@@ -159,7 +174,27 @@ $this->menu=array(
 		$(this).parent().parent().remove();
 		return false;
 	})
+	$(document).ready(function() {
+	<?php if ($model2->template == 'property'): ?>
+		$.ajax({
+			url: $('.btn-preview-template').attr('href'),
+			data: $('#campaign-form').serialize()+'&ajax=ajax',
+			dataType: 'html',
+			type: 'post',
+			success: function(msg){
+				$('#iframe-template').show();
+				var iframe = $('.iframe-template').contents();
+				iframe.find('body').html(msg);
+			},
+			error: function(msg){
+				alert('sending data error, cek your connection');
+				console.log(msg);
+			}
+		});
+	<?php endif ?>
+	})
 </script>
+	
 <script type="text/javascript">
 if (typeof RedactorPlugins === 'undefined') var RedactorPlugins = {};
 

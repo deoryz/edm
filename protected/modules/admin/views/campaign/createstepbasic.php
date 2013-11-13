@@ -82,8 +82,8 @@ $this->menu=array(
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
 			// 'buttonType'=>'submit',
 			// 'type'=>'info',
-			'url'=>CHtml::normalizeUrl(array('createstep2', 'id'=>$_GET['id'])),
-			'label'=>'back',
+			'url'=>CHtml::normalizeUrl(array('createstep2', 'id'=>$_GET['id'], 'pilih'=>true)),
+			'label'=>'Pilih Template',
 		)); ?>
 	</div>
 
